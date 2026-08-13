@@ -92,3 +92,5 @@ Hold **⌃⌥**, speak, release — the text appears at your cursor in any app. 
 Install: download `Noi-1.0.0.dmg` → drag **Nói** to Applications (right-click → Open on first launch since it isn't notarized yet) → grant Microphone + Accessibility → sign in to ChatGPT → hold **⌃⌥** to dictate. See **[docs/INSTALL-MACOS.md](docs/INSTALL-MACOS.md)**.
 
 MIT licensed — see [LICENSE](LICENSE).
+
+Nói turns speech into text using your own ChatGPT web session (an unofficial endpoint) and, optionally, your own Google AI Studio API key. Your use of those third-party services is governed by their own terms; the MIT license covers only the Nói source code.
