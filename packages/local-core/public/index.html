@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nói · Cài đặt</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div>
+        <h1>Nói</h1>
+        <p class="sub" id="page-sub">Cài đặt · chỉ khi cần</p>
+      </div>
+      <div class="topbar-actions">
+        <div class="seg" role="group" aria-label="Language">
+          <button type="button" class="seg-btn active" data-locale="vi">VI</button>
+          <button type="button" class="seg-btn" data-locale="en">EN</button>
+        </div>
+        <span id="system-pill" class="pill warn">…</span>
+      </div>
+    </header>
+
+    <section class="status-block" id="setup-status" aria-live="polite"></section>
+
+    <section class="primary-cta" id="login-cta">
+      <div class="login-cta-text">
+        <div class="lab" id="login-cta-title">Đăng nhập ChatGPT</div>
+        <div class="hint" id="login-cta-sub">Bắt buộc để nói ra chữ (STT). Đăng nhập ngay trong app.</div>
+        <div class="hint account-line" id="login-cta-account" hidden></div>
+      </div>
+      <button type="button" class="btn primary" id="btn-chatgpt-login">Đăng nhập…</button>
+    </section>
+
+    <div class="keystrip" aria-label="Hotkeys">
+      <div class="keycap"><kbd>⌃⌥</kbd><span id="key-stt-lab">Nói</span></div>
+      <div class="keycap"><kbd>⌥⌥</kbd><span id="key-corr-lab">Sửa</span></div>
+      <div class="keycap"><kbd>Esc</kbd><span id="key-esc-lab">Dừng</span></div>
+    </div>
+
+    <details class="panel" id="panel-correct">
+      <summary>
+        <span id="sum-correct">Sửa văn bản (tuỳ chọn)</span>
+        <span class="sum-meta" id="correct-status">…</span>
+      </summary>
+      <div class="panel-body">
+        <p class="hint" id="correct-intro">
+          Tuỳ chọn. Dán một API key Google AI Studio (miễn phí) để bật sửa chính tả sau khi nói và khi bấm ⌥⌥.
+        </p>
+
+        <div class="key-row">
+          <div class="key-row-head">
+            <div class="lab" id="aistudio-key-lab">Google AI Studio API key</div>
+            <a class="hint link" id="aistudio-key-link" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Lấy key miễn phí →</a>
+          </div>
+          <div class="key-row-input">
+            <input type="password" id="aistudio-key" placeholder="Dán key AI Studio…" autocomplete="off" />
+            <button type="button" class="btn sm" id="btn-aistudio-save">Lưu</button>
+            <button type="button" class="btn ghost sm" id="btn-aistudio-del" disabled>Xoá</button>
+          </div>
+          <div class="hint" id="aistudio-key-state"></div>
+        </div>
+
+        <div class="active-model" id="active-model-box"></div>
+
+        <div class="pref-stack">
+          <label class="pref-row">
+            <input type="checkbox" id="auto-correct-toggle" />
+            <span id="auto-correct-lab">Tự sửa ngay sau khi nói</span>
+          </label>
+          <label class="pref-row">
+            <input type="checkbox" id="rotate-toggle" />
+            <span id="rotate-lab">Xoay vòng model (né giới hạn free)</span>
+          </label>
+        </div>
+
+        <div class="models" id="aistudio-models"></div>
+
+        <div class="row">
+          <button type="button" class="btn ghost" id="btn-test-correct">Thử sửa một câu</button>
+          <span class="meta" id="correct-lat">—</span>
+          <span class="meta" id="selected-count"></span>
+        </div>
+        <pre id="test-out" class="out" hidden></pre>
+      </div>
+    </details>
+
+    <footer class="foot">
+      <span id="foot-note">Nói · nhấn phím là ra chữ</span>
+      <span class="mono" id="foot-version">Nói 1.0.0</span>
+    </footer>
+  </div>
+
+  <div id="toast" hidden role="status"></div>
+  <span id="lat-stt" hidden></span>
+  <span id="lat-corr" hidden></span>
+  <script src="/app.js"></script>
+</body>
+</html>

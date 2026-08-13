@@ -1,0 +1,26 @@
+node_modules/
+.DS_Store
+*.xcuserstate
+DerivedData/
+.build/
+.vs/
+bin/
+obj/
+*.user
+.env
+.secrets/
+*.ogg
+*.wav
+*.m4a
+!**/fixtures/**
+apps/macos/.build/
+apps/macos/Resources/AppIcon.iconset/
+
+site/downloads/*.zip
+site/downloads/manifest.json
+
+artifacts/*.log
+site/downloads/*.dmg
+
+# wrangler local cache (chứa account id)
+.wrangler/

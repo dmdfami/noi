@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nói — nói ra chữ trên Mac, bằng tài khoản ChatGPT của bạn</title>
+  <meta name="description" content="App menu bar cho Mac: giữ ⌃⌥, nói, ra chữ tại con trỏ — bằng chính tài khoản ChatGPT của bạn. Miễn phí, mã nguồn mở, dữ liệu ở trên máy bạn." />
+  <meta property="og:title" content="Nói — nói ra chữ trên Mac" />
+  <meta property="og:description" content="Giữ ⌃⌥, nói, ra chữ. Bằng tài khoản ChatGPT của bạn. Miễn phí & mã nguồn mở." />
+  <meta name="theme-color" content="#f5f3ff" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="blob blob-a" aria-hidden="true"></div>
+  <div class="blob blob-b" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="brand" href="#top"><span class="brand-dot"></span> Nói</a>
+    <nav class="nav-links">
+      <a href="#how" class="i18n"><span class="vi">Cách dùng</span><span class="en">How</span></a>
+      <a href="#privacy" class="i18n"><span class="vi">Riêng tư</span><span class="en">Privacy</span></a>
+      <a href="https://github.com/dmdfami/noi" target="_blank" rel="noopener">GitHub</a>
+      <button type="button" id="lang-toggle" class="lang-toggle" aria-label="Language">EN</button>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <p class="eyebrow i18n"><span class="vi">macOS · menu bar · mã nguồn mở</span><span class="en">macOS · menu bar · open source</span></p>
+      <h1 class="i18n">
+        <span class="vi">Nói ra chữ.<br/><span class="grad">Trên Mac, tức thì.</span></span>
+        <span class="en">Speak, get text.<br/><span class="grad">On your Mac, instantly.</span></span>
+      </h1>
+      <p class="lede i18n">
+        <span class="vi">Giữ <b>⌃⌥</b>, nói một câu, thả ra — chữ hiện ngay tại con trỏ trong mọi app. Dùng chính <b>tài khoản ChatGPT</b> của bạn. Miễn phí, dữ liệu ở trên máy bạn.</span>
+        <span class="en">Hold <b>⌃⌥</b>, say a sentence, release — text appears at your cursor in any app. Uses your own <b>ChatGPT account</b>. Free, your data stays on your Mac.</span>
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" id="btn-download" href="https://dl.d92.uk/Noi-1.0.0.dmg">
+          <span class="i18n"><span class="vi">Tải cho Mac</span><span class="en">Download for Mac</span></span>
+          <small>v1.0.0 · 41 MB · Apple Silicon · macOS 13+</small>
+        </a>
+        <a class="btn ghost" href="https://github.com/dmdfami/noi" target="_blank" rel="noopener">
+          <span class="i18n"><span class="vi">Xem mã nguồn</span><span class="en">View source</span></span>
+        </a>
+      </div>
+      <p class="fine i18n" id="dl-meta">
+        <span class="vi">Miễn phí · MIT · beta chưa notarize (mở lần đầu: chuột phải → Mở)</span>
+        <span class="en">Free · MIT · beta, not notarized yet (first open: right-click → Open)</span>
+      </p>
+
+      <div class="keys">
+        <div class="key"><kbd>⌃⌥</kbd><span class="i18n"><span class="vi">Nói</span><span class="en">Dictate</span></span></div>
+        <div class="key"><kbd>⌥⌥</kbd><span class="i18n"><span class="vi">Sửa</span><span class="en">Fix</span></span></div>
+        <div class="key"><kbd>Esc</kbd><span class="i18n"><span class="vi">Dừng</span><span class="en">Stop</span></span></div>
+      </div>
+    </section>
+
+    <section id="how" class="steps">
+      <h2 class="i18n"><span class="vi">Ba bước là xong</span><span class="en">Three steps</span></h2>
+      <div class="step-grid">
+        <div class="step">
+          <span class="step-n">1</span>
+          <h3 class="i18n"><span class="vi">Tải & mở</span><span class="en">Download & open</span></h3>
+          <p class="i18n"><span class="vi">Tải DMG, kéo <b>Nói</b> vào Applications. Lần đầu: chuột phải → Mở (bản chưa notarize).</span><span class="en">Get the DMG, drag <b>Nói</b> to Applications. First launch: right-click → Open.</span></p>
+        </div>
+        <div class="step">
+          <span class="step-n">2</span>
+          <h3 class="i18n"><span class="vi">Đăng nhập ChatGPT</span><span class="en">Sign in to ChatGPT</span></h3>
+          <p class="i18n"><span class="vi">Ngay trong app. Cấp quyền Micro + Accessibility khi được hỏi.</span><span class="en">Right inside the app. Grant Microphone + Accessibility when asked.</span></p>
+        </div>
+        <div class="step">
+          <span class="step-n">3</span>
+          <h3 class="i18n"><span class="vi">Giữ ⌃⌥ & nói</span><span class="en">Hold ⌃⌥ & speak</span></h3>
+          <p class="i18n"><span class="vi">Thả ra là có chữ tại con trỏ. Chạm đôi ⌥ để sửa (tuỳ chọn).</span><span class="en">Release and the text lands at your cursor. Double-tap ⌥ to fix (optional).</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy" class="two">
+      <div class="card soft">
+        <h2 class="i18n"><span class="vi">Ở trên máy bạn</span><span class="en">Stays on your Mac</span></h2>
+        <ul class="bullets">
+          <li class="i18n"><span class="vi">Token & key lưu trên máy (mode 0600)</span><span class="en">Token & key stored locally (mode 0600)</span></li>
+          <li class="i18n"><span class="vi">Không có server trung gian của chúng tôi</span><span class="en">No middle server of ours</span></li>
+          <li class="i18n"><span class="vi">Không log audio, transcript, hay token</span><span class="en">No logging of audio, transcripts, or tokens</span></li>
+          <li class="i18n"><span class="vi">Mã nguồn mở — bạn xem được tất cả</span><span class="en">Open source — you can read everything</span></li>
+        </ul>
+      </div>
+      <div class="card accent">
+        <p class="card-kicker i18n"><span class="vi">Sửa văn bản (tuỳ chọn)</span><span class="en">Text fix (optional)</span></p>
+        <p class="i18n"><span class="vi">Dán một <b>API key Google AI Studio</b> miễn phí để sửa chính tả khi bấm ⌥⌥. Không bắt buộc.</span><span class="en">Paste one free <b>Google AI Studio</b> key to fix spelling on ⌥⌥. Not required.</span></p>
+        <p class="mute i18n"><span class="vi">STT dùng phiên ChatGPT web (không chính thức) — bạn tự quyết định đăng nhập.</span><span class="en">STT uses your ChatGPT web session (unofficial) — you choose to sign in.</span></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Nói · <a href="https://noi.d92.uk">noi.d92.uk</a></span>
+    <span class="mute">MIT · <a href="https://github.com/dmdfami/noi" target="_blank" rel="noopener">mã nguồn mở trên GitHub</a></span>
+  </footer>
+
+  <script>
+    // Language toggle (default VI, remember choice)
+    const root = document.documentElement;
+    const btn = document.getElementById("lang-toggle");
+    function setLang(l) {
+      root.classList.toggle("en", l === "en");
+      root.lang = l;
+      if (btn) btn.textContent = l === "en" ? "VI" : "EN";
+      try { localStorage.setItem("noi.lang", l); } catch (e) {}
+    }
+    setLang((() => { try { return localStorage.getItem("noi.lang") || "vi"; } catch (e) { return "vi"; } })());
+    btn?.addEventListener("click", () => setLang(root.classList.contains("en") ? "vi" : "en"));
+
+  </script>
+</body>
+</html>

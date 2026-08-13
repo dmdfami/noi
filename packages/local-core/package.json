@@ -1,0 +1,18 @@
+{
+  "name": "@chatgpt-audio/local-core",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first STT/TTS/Correct core — no hosted Worker required",
+  "bin": {
+    "chatgpt-audio-local": "./cli.mjs"
+  },
+  "scripts": {
+    "start": "node cli.mjs serve",
+    "smoke": "node cli.mjs smoke",
+    "test": "node --test src/**/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
