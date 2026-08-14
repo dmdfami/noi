@@ -2,6 +2,10 @@
 
 Mỗi bản phát hành = một `Noi-<version>.dmg` trên GitHub Releases, khớp `CFBundleShortVersionString`.
 
+## 1.0.1 — sửa dán lặp
+
+- **Sửa lỗi dán lặp 3 lần sau khi nói** (browser/Electron/terminal): trước đây một lần dán bắn Cmd+V vào cả hai tap HID + session (thành 2 lần) rồi chạy thêm AppleScript backup (lần 3). Giờ chỉ dán đúng một lần; AppleScript chỉ còn là fallback khi thiếu quyền Input Monitoring.
+
 ## 1.0.0 — bản công khai đầu tiên (mã nguồn mở)
 
 Định vị lại về đúng một việc: **nói ra chữ trên Mac bằng tài khoản ChatGPT**.

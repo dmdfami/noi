@@ -450,22 +450,24 @@ enum SelectionService {
             return true
         }
 
-        // Keyboard paste path (Terminal, browsers, IDEs…)
-        if !hasInputMonitoring() {
-            if !didPromptInputMonitoring {
-                didPromptInputMonitoring = true
-                requestInputMonitoring()
-            }
+        // Keyboard paste path (Terminal, browsers, IDEs…) — exactly ONE paste.
+        let canPostKeys = hasInputMonitoring()
+        if !canPostKeys, !didPromptInputMonitoring {
+            didPromptInputMonitoring = true
+            requestInputMonitoring()
         }
 
         // Longer settle for terminal after modifier release
         usleep(keyboardOnly ? 80_000 : 30_000)
-        postCommandV()
-        usleep(keyboardOnly ? 180_000 : 120_000)
-
-        // System Events backup (needs Automation / Accessibility for this app)
-        _ = pasteViaSystemEvents()
-        usleep(80_000)
+        if canPostKeys {
+            postCommandV()
+            usleep(keyboardOnly ? 180_000 : 120_000)
+        } else {
+            // CGEvent posting unavailable → System Events fallback (never both:
+            // stacking them pasted the same text multiple times)
+            _ = pasteViaSystemEvents()
+            usleep(80_000)
+        }
 
         pb.clearContents()
         pb.setString(text, forType: .string)
@@ -573,7 +575,6 @@ enum SelectionService {
             if let up = CGEvent(keyboardEventSource: src, virtualKey: code, keyDown: false) {
                 up.flags = []
                 up.post(tap: .cghidEventTap)
-                up.post(tap: .cgSessionEventTap)
             }
         }
         usleep(30_000)
@@ -594,9 +595,10 @@ enum SelectionService {
         up.flags = [.maskCommand]
         commandUp.flags = []
 
+        // Post once at the HID level only. Posting the same events to a second
+        // tap location delivers the whole Cmd+V sequence twice (double paste).
         for e in [commandDown, down, up, commandUp] {
             e.post(tap: .cghidEventTap)
-            e.post(tap: .cgSessionEventTap)
         }
     }
 
