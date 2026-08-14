@@ -16,7 +16,7 @@ Giữ **⌃⌥** (Control+Option), nói, thả ra — chữ hiện ngay tại co
 
 Xem hướng dẫn đầy đủ: **[docs/INSTALL-MACOS.md](docs/INSTALL-MACOS.md)** (không cần Terminal).
 
-1. Tải `Noi-1.0.1.dmg` từ [tải trực tiếp](https://dl.d92.uk/Noi-1.0.1.dmg) hoặc [noi.d92.uk](https://noi.d92.uk).
+1. Tải `Noi-1.0.2.dmg` từ [tải trực tiếp](https://dl.d92.uk/Noi-1.0.2.dmg) hoặc [noi.d92.uk](https://noi.d92.uk).
 2. Mở DMG → kéo **Nói** vào Applications.
 3. Cấp quyền **Micro** + **Accessibility**, đăng nhập ChatGPT trong app.
 4. Giữ **⌃⌥** để nói. Chạm đôi **⌥** để sửa (cần key AI Studio). **Esc** để dừng.
@@ -60,7 +60,7 @@ CHATGPT_AUDIO_NODE_BIN=/path/node-v22-darwin-arm64/bin/node ./scripts/build-app.
 ./scripts/verify-packaging.sh              # kiểm tra .app đã cài
 
 # Đóng DMG cho phát hành
-cd ../.. && SHIP_VERSION=1.0.1 ./scripts/make-dmg.sh
+cd ../.. && SHIP_VERSION=1.0.2 ./scripts/make-dmg.sh
 ```
 
 Ship trên máy này: **[docs/SHIP-MAC.md](docs/SHIP-MAC.md)** (`SHIP_VERSION=x.y.z ./scripts/ship-release.sh`). Đóng gói: **[docs/V2-SINGLE-APP-PACKAGING.md](docs/V2-SINGLE-APP-PACKAGING.md)** · **[docs/SHIP-PUBLIC.md](docs/SHIP-PUBLIC.md)** · **[docs/SHIP-READINESS.md](docs/SHIP-READINESS.md)**.
@@ -89,7 +89,7 @@ Hold **⌃⌥**, speak, release — the text appears at your cursor in any app. 
 
 > **About STT:** Nói uses your ChatGPT web session via an **unofficial** endpoint. It may break when OpenAI changes things. This is a personal tool, not an OpenAI product.
 
-Install: download `Noi-1.0.1.dmg` → drag **Nói** to Applications → grant Microphone + Accessibility → sign in to ChatGPT → hold **⌃⌥** to dictate. See **[docs/INSTALL-MACOS.md](docs/INSTALL-MACOS.md)**.
+Install: download `Noi-1.0.2.dmg` → drag **Nói** to Applications → grant Microphone + Accessibility → sign in to ChatGPT → hold **⌃⌥** to dictate. See **[docs/INSTALL-MACOS.md](docs/INSTALL-MACOS.md)**.
 
 MIT licensed — see [LICENSE](LICENSE).
 

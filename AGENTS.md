@@ -4,7 +4,7 @@
 
 **Nói** — app menu bar cho macOS: giữ `⌃⌥`, nói, thả ra → chữ hiện tại con trỏ, dùng phiên đăng nhập ChatGPT web của người dùng. Tuỳ chọn: chạm đôi `⌥` để sửa văn bản đang chọn bằng Google AI Studio.
 
-Trang chủ: https://noi.d92.uk · Tải: https://dl.d92.uk/Noi-1.0.1.dmg
+Trang chủ: https://noi.d92.uk · Tải: https://dl.d92.uk/Noi-1.0.2.dmg
 
 ## Scope — giữ tối giản, không nới
 

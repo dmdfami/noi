@@ -7,7 +7,8 @@ URL="http://127.0.0.1:${PORT}"
 
 export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 
-if curl -fsS --max-time 1 "${URL}/healthz" >/dev/null 2>&1; then
+if curl -fsS --max-time 1 "${URL}/healthz" >/dev/null 2>&1 \
+  && curl -fsS --max-time 1 "${URL}/" | grep -qi '<html'; then
   echo "local-core already up at ${URL}"
 else
   echo "starting local-core on :${PORT}…"

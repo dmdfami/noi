@@ -1,6 +1,6 @@
 # Ship readiness
 
-Bản công khai hiện tại: **1.0.1** — [noi.d92.uk](https://noi.d92.uk) · [dl.d92.uk/Noi-1.0.1.dmg](https://dl.d92.uk/Noi-1.0.1.dmg) · [GitHub Releases](https://github.com/dmdfami/noi/releases/latest).
+Bản công khai hiện tại: **1.0.2** — [noi.d92.uk](https://noi.d92.uk) · [dl.d92.uk/Noi-1.0.2.dmg](https://dl.d92.uk/Noi-1.0.2.dmg) · [GitHub Releases](https://github.com/dmdfami/noi/releases/latest).
 
 ## Đã xong
 
@@ -11,7 +11,7 @@ Bản công khai hiện tại: **1.0.1** — [noi.d92.uk](https://noi.d92.uk) ·
 
 ## Notarize — đã bật (2026-08-14)
 
-Bản `1.0.1` trên [dl.d92.uk](https://dl.d92.uk/Noi-1.0.1.dmg) ký **Developer ID Application: DUC DO MANH (P9U773F44F)** và đã notarize + staple. Gatekeeper: `accepted / Notarized Developer ID`.
+Bản `1.0.2` trên [dl.d92.uk](https://dl.d92.uk/Noi-1.0.2.dmg) ký **Developer ID Application: DUC DO MANH (P9U773F44F)** và đã notarize + staple. Gatekeeper: `accepted / Notarized Developer ID`.
 
 Ship lại DMG:
 

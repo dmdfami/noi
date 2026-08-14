@@ -78,9 +78,10 @@ export function createAppServer(opts = {}) {
         return;
       }
 
-      // Public health
+      // Public health. `app` + `ui` let the menu-bar client refuse a leftover
+      // sibling that answers /healthz but does not serve the Settings HTML.
       if (method === "GET" && (path === "/healthz" || path === "/health")) {
-        return send(res, json(200, { ok: true, version: 2 }));
+        return send(res, json(200, { ok: true, version: 2, app: "noi", ui: true }));
       }
 
       // Static UI (no auth) — html/js/css under public/

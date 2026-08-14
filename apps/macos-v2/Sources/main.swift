@@ -15,6 +15,35 @@ enum V2Config {
             ?? defaultURL
     }
 
+    static func persistBaseURL(_ url: String) {
+        UserDefaults.standard.set(url, forKey: "localCoreURL")
+    }
+
+    /// True when something already accepts TCP on 127.0.0.1:`port`.
+    static func loopbackPortInUse(_ port: Int) -> Bool {
+        let sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)
+        guard sock >= 0 else { return true }
+        defer { close(sock) }
+        var addr = sockaddr_in()
+        addr.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
+        addr.sin_family = sa_family_t(AF_INET)
+        addr.sin_port = UInt16(port).bigEndian
+        addr.sin_addr = in_addr(s_addr: inet_addr("127.0.0.1"))
+        let ok: Int32 = withUnsafePointer(to: &addr) { ptr in
+            ptr.withMemoryRebound(to: sockaddr.self, capacity: 1) { sa in
+                connect(sock, sa, socklen_t(MemoryLayout<sockaddr_in>.size))
+            }
+        }
+        return ok == 0
+    }
+
+    static func firstFreeLoopbackPort(from start: Int = 8797, limit: Int = 20) -> Int {
+        for p in start..<(start + limit) {
+            if !loopbackPortInUse(p) { return p }
+        }
+        return start + limit
+    }
+
     /// Resolved launch paths for local-core (bundled first, then dev checkout).
     struct CoreLaunch: Equatable {
         let nodePath: String
@@ -117,7 +146,7 @@ enum V2Config {
 // MARK: - Local HTTP client
 
 final class LocalCoreClient: @unchecked Sendable {
-    let baseURL: String
+    var baseURL: String
     let token: String
     init(baseURL: String = V2Config.baseURL, token: String = V2Config.token) {
         self.baseURL = baseURL.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
@@ -128,6 +157,19 @@ final class LocalCoreClient: @unchecked Sendable {
         let (data, _) = try await get("/healthz")
         let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any]
         return (obj?["ok"] as? Bool) == true
+    }
+
+    /// Our Settings UI, not a leftover core that only has /healthz.
+    func dashboardReady() async -> Bool {
+        do {
+            guard try await health() else { return false }
+            let (data, http) = try await get("/")
+            guard http.statusCode == 200 else { return false }
+            guard let text = String(data: data, encoding: .utf8) else { return false }
+            return text.localizedCaseInsensitiveContains("<html")
+        } catch {
+            return false
+        }
     }
 
     func transcribe(fileURL: URL) async throws -> String {
@@ -892,7 +934,7 @@ final class AppState: ObservableObject {
             configDashboard.onDeepLink = { [weak self] url in
                 self?.handleDeepLink(url)
             }
-            configDashboard.show(urlString: V2Config.baseURL + "/")
+            configDashboard.show(urlString: client.baseURL + "/")
         }
     }
 
@@ -994,24 +1036,23 @@ final class AppState: ObservableObject {
         }
     }
 
-    /// Start embedded (or dev) local-core if /healthz is not already OK.
+    /// Start embedded (or dev) local-core if our Settings UI is not already up.
+    /// /healthz alone is not enough: a leftover ChatGPT Audio Local node can
+    /// hold :8797, answer healthz, and 404 /index.html.
     func ensureCore() async {
-        do {
-            if try await client.health() {
-                if coreSource == "none" { coreSource = "running" }
-                return
-            }
-        } catch { /* need spawn */ }
+        if await client.dashboardReady() {
+            if coreSource == "none" { coreSource = "running" }
+            return
+        }
 
         // Reap dead process handle
         if let old = coreProcess, !old.isRunning {
             coreProcess = nil
         }
         if coreProcess?.isRunning == true {
-            // Wait a bit for still-starting process
             for _ in 0..<15 {
                 try? await Task.sleep(nanoseconds: 200_000_000)
-                if (try? await client.health()) == true { return }
+                if await client.dashboardReady() { return }
             }
         }
 
@@ -1021,15 +1062,20 @@ final class AppState: ObservableObject {
         }
         coreSource = launch.source
 
+        let port = V2Config.firstFreeLoopbackPort()
+        let url = "http://127.0.0.1:\(port)"
+        V2Config.persistBaseURL(url)
+        client.baseURL = url
+
         let p = Process()
         p.executableURL = URL(fileURLWithPath: launch.nodePath)
-        // Bundled node: argv = [cli.mjs, serve]
-        // Dev node binary same; if path is node itself:
         p.arguments = [launch.cliPath, "serve"]
         p.currentDirectoryURL = URL(fileURLWithPath: launch.coreDir)
         p.standardOutput = FileHandle.nullDevice
         p.standardError = FileHandle.nullDevice
-        // Detach so core outlives brief app hiccups; still child of app session
+        var env = ProcessInfo.processInfo.environment
+        env["PORT"] = String(port)
+        p.environment = env
         p.qualityOfService = .userInitiated
         do {
             try p.run()
@@ -1041,7 +1087,7 @@ final class AppState: ObservableObject {
 
         for _ in 0..<40 {
             try? await Task.sleep(nanoseconds: 150_000_000)
-            if (try? await client.health()) == true { return }
+            if await client.dashboardReady() { return }
         }
     }
 

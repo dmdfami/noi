@@ -86,6 +86,7 @@ a=json.load(open(sys.argv[1]))
 b=json.load(open(sys.argv[2]))
 assert a.get("ok") is True and b.get("ok") is True
 assert a.get("version")==b.get("version")==2
+assert a.get("app")=="noi" and a.get("ui") is True
 print("healthz pair consistent", a)
 PY
 grep -qi "html" "$SCRATCH/index.html" || fail "dashboard HTML not served from embedded public/"

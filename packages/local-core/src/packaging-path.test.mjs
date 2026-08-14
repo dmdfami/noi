@@ -62,6 +62,8 @@ test("cli serve from foreign cwd exposes healthz + index.html", async () => {
     assert.equal(h1.ok, true);
     assert.equal(h2.ok, true);
     assert.equal(h1.version, h2.version);
+    assert.equal(h1.app, "noi");
+    assert.equal(h1.ui, true);
 
     const htmlRes = await fetch(`${url}/`);
     assert.equal(htmlRes.ok, true);

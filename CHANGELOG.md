@@ -2,6 +2,10 @@
 
 Mỗi bản phát hành = một `Noi-<version>.dmg` trên GitHub Releases, khớp `CFBundleShortVersionString`.
 
+## 1.0.2 — Settings không nhận nhầm core cũ
+
+- **Cửa sổ Cài đặt ra JSON `not_found /index.html`** khi cổng `8797` bị process mồ côi của app cũ (ChatGPT Audio Local) chiếm: Nói thấy `/healthz` OK nên không spawn core của mình. Giờ chỉ nhận core có UI HTML; cổng bận thì chọn cổng trống và truyền `PORT`.
+
 ## 1.0.1 — sửa dán lặp + notarize
 
 - **Sửa lỗi dán lặp 3 lần sau khi nói** (browser/Electron/terminal): trước đây một lần dán bắn Cmd+V vào cả hai tap HID + session (thành 2 lần) rồi chạy thêm AppleScript backup (lần 3). Giờ chỉ dán đúng một lần; AppleScript chỉ còn là fallback khi thiếu quyền Input Monitoring.
