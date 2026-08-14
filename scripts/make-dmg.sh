@@ -11,6 +11,12 @@ VERSION="${SHIP_VERSION:-1.0.1}"
 OUT_DIR="${OUT_DIR:-$ROOT/site/downloads}"
 VOL_NAME="Nói"
 DMG_NAME="Noi-${VERSION}.dmg"
+if [[ -z "${CODESIGN_IDENTITY:-}" && -f "$HOME/.config/noi/apple.env" ]]; then
+  set -a
+  # shellcheck disable=SC1091
+  source "$HOME/.config/noi/apple.env"
+  set +a
+fi
 IDENTITY="${CODESIGN_IDENTITY:-}"
 NOTARY_PROFILE="${NOTARY_PROFILE:-}"
 ENTITLEMENTS="$ROOT/apps/macos-v2/ChatGPTAudioLocal.entitlements"

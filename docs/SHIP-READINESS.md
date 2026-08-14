@@ -24,4 +24,4 @@ SHIP_VERSION=x.y.z CODESIGN_IDENTITY="$APPLE_CODESIGN_IDENTITY" NOTARY_PROFILE=A
 
 Cert Developer ID tới **2031-08-15**. API key App Store Connect `noi-notary` không hết hạn (Infisical + `~/.config/noi/apple.env`). Membership Apple vẫn cần gia hạn ~$99/năm nếu muốn notarize bản *mới* sau khi hết hạn hội viên.
 
-Chi tiết kỹ thuật: [SHIP-PUBLIC.md](SHIP-PUBLIC.md).
+Runbook đầy đủ trên máy này: **[SHIP-MAC.md](SHIP-MAC.md)**. Chi tiết kỹ thuật chung: [SHIP-PUBLIC.md](SHIP-PUBLIC.md).

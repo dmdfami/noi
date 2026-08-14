@@ -63,7 +63,7 @@ CHATGPT_AUDIO_NODE_BIN=/path/node-v22-darwin-arm64/bin/node ./scripts/build-app.
 cd ../.. && SHIP_VERSION=1.0.1 ./scripts/make-dmg.sh
 ```
 
-Chi tiết đóng gói + notarize: **[docs/V2-SINGLE-APP-PACKAGING.md](docs/V2-SINGLE-APP-PACKAGING.md)**, **[docs/SHIP-PUBLIC.md](docs/SHIP-PUBLIC.md)**. Còn thiếu gì để ship: **[docs/SHIP-READINESS.md](docs/SHIP-READINESS.md)**.
+Ship trên máy này: **[docs/SHIP-MAC.md](docs/SHIP-MAC.md)** (`SHIP_VERSION=x.y.z ./scripts/ship-release.sh`). Đóng gói: **[docs/V2-SINGLE-APP-PACKAGING.md](docs/V2-SINGLE-APP-PACKAGING.md)** · **[docs/SHIP-PUBLIC.md](docs/SHIP-PUBLIC.md)** · **[docs/SHIP-READINESS.md](docs/SHIP-READINESS.md)**.
 
 Góp ý / đóng góp: **[CONTRIBUTING.md](CONTRIBUTING.md)** · Bảo mật: **[SECURITY.md](SECURITY.md)**.
 
