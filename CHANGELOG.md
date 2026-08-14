@@ -2,7 +2,7 @@
 
 Mỗi bản phát hành = một `Noi-<version>.dmg` trên GitHub Releases, khớp `CFBundleShortVersionString`.
 
-## Chưa phát hành
+## 1.0.1 — sửa dán lặp
 
 - **Sửa lỗi dán lặp 3 lần sau khi nói** (browser/Electron/terminal): trước đây một lần dán bắn Cmd+V vào cả hai tap HID + session (thành 2 lần) rồi chạy thêm AppleScript backup (lần 3). Giờ chỉ dán đúng một lần; AppleScript chỉ còn là fallback khi thiếu quyền Input Monitoring.
 

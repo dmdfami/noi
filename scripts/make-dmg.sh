@@ -7,7 +7,7 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 APP="${APP_PATH:-/Applications/Noi.app}"
-VERSION="${SHIP_VERSION:-1.0.0}"
+VERSION="${SHIP_VERSION:-1.0.1}"
 OUT_DIR="${OUT_DIR:-$ROOT/site/downloads}"
 VOL_NAME="Nói"
 DMG_NAME="Noi-${VERSION}.dmg"

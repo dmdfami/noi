@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-VERSION="${SHIP_VERSION:-1.0.0}"
+VERSION="${SHIP_VERSION:-1.0.1}"
 SITE="$ROOT/site"
 DL="$SITE/downloads"
 mkdir -p "$DL"
