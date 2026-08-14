@@ -1,4 +1,0 @@
-{
-  "install": "curl -fsSL https://tailscale.com/install.sh | sudo sh\ncd packages/local-core && npm install --no-audit --no-fund || true",
-  "start": "bash scripts/cloud-connect.sh || true"
-}

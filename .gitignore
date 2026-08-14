@@ -24,3 +24,6 @@ site/downloads/*.dmg
 
 # wrangler local cache (chứa account id)
 .wrangler/
+
+# Cursor cloud / IDE — không đưa môi trường nội bộ lên repo public
+.cursor/

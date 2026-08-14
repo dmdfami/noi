@@ -31,7 +31,7 @@ ChatGPT web (STT) · Google AI Studio (sửa, tuỳ chọn)
 | `apps/macos-v2/scripts/` | `build-app.sh` (đóng .app tự chứa), `verify-packaging.sh` |
 | `packages/local-core/` | Core Node: server, provider, prompts, UI Settings (`public/`) |
 | `site/` | Landing (Cloudflare Pages → noi.d92.uk) |
-| `scripts/` | `make-dmg.sh`, `deploy-landing.sh`, `cloud-connect.sh`, `setup-developer-id.sh` |
+| `scripts/` | `make-dmg.sh`, `deploy-landing.sh`, `setup-developer-id.sh` |
 
 ## Quy tắc code
 
@@ -51,22 +51,12 @@ npm start                                # UI Settings tại http://127.0.0.1:87
 cd apps/macos-v2 && ./scripts/build-app.sh && ./scripts/verify-packaging.sh   # cần máy Mac
 ```
 
-## Cursor Cloud
+## Linux (CI / cloud)
 
-- Môi trường cloud là **Linux** → build Swift/DMG phải chạy trên máy Mac.
-- `scripts/cloud-connect.sh` (chạy tự động qua `.cursor/environment.json`) nối agent vào tailnet và mở sẵn `ssh mac` / `ssh vps`. Build từ xa:
-  ```bash
-  bash scripts/cloud-connect.sh
-  git archive --format=tar HEAD | ssh mac 'rm -rf ~/noi-build && mkdir -p ~/noi-build && tar -x -C ~/noi-build'
-  ssh mac 'cd ~/noi-build/apps/macos-v2 && ./scripts/build-app.sh && ./scripts/verify-packaging.sh'
-  ```
+- Chỉ `packages/local-core` chạy được trên Linux: `npm test` (8 test) và `npm start` (UI Settings + API tại `http://127.0.0.1:8797`). App Swift/DMG **phải** build trên máy Mac.
+- **STT** không test headless: cần đăng nhập ChatGPT web thật + micro. `/v1/status` báo `degraded` khi chưa có token — bình thường.
+- **Correct** (tuỳ chọn) cần `GOOGLE_AI_STUDIO_API_KEY` và project GCP đã bật Generative Language API. Server đọc key từ `~/.config/chatgpt-audio/v2.env` hoặc biến môi trường (alias `GEMINI_API_KEY`).
 - Deploy landing: `scripts/deploy-landing.sh` (Cloudflare Pages, project `noi`).
-
-### Chạy & kiểm thử trên Cloud (Linux)
-
-- Phần test được trên Linux là `packages/local-core` (zero-dependency, chỉ Node stdlib): `npm test` (8 test) và `npm start` (UI Settings + API tại `http://127.0.0.1:8797`). App Swift/DMG cần máy Mac.
-- **STT** không thể test headless trên Linux: cần đăng nhập ChatGPT web thật (`CHATGPT_ACCESS_TOKEN`) + micro; endpoint không chính thức. `/v1/status` sẽ báo `degraded` khi chưa có token — đó là bình thường.
-- **Correct** (tuỳ chọn) cần một `GOOGLE_AI_STUDIO_API_KEY` mà **project GCP tương ứng đã bật Generative Language API**. Nếu API bị tắt sẽ trả HTTP 403 dù key hợp lệ. Server đọc key từ `~/.config/chatgpt-audio/v2.env` hoặc biến môi trường cùng tên (alias `GEMINI_API_KEY`).
 
 ## Tài liệu cần cập nhật khi đổi hành vi
 
