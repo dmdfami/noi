@@ -62,6 +62,12 @@ cd apps/macos-v2 && ./scripts/build-app.sh && ./scripts/verify-packaging.sh   # 
   ```
 - Deploy landing: `scripts/deploy-landing.sh` (Cloudflare Pages, project `noi`).
 
+### Chạy & kiểm thử trên Cloud (Linux)
+
+- Phần test được trên Linux là `packages/local-core` (zero-dependency, chỉ Node stdlib): `npm test` (8 test) và `npm start` (UI Settings + API tại `http://127.0.0.1:8797`). App Swift/DMG cần máy Mac.
+- **STT** không thể test headless trên Linux: cần đăng nhập ChatGPT web thật (`CHATGPT_ACCESS_TOKEN`) + micro; endpoint không chính thức. `/v1/status` sẽ báo `degraded` khi chưa có token — đó là bình thường.
+- **Correct** (tuỳ chọn) cần một `GOOGLE_AI_STUDIO_API_KEY` mà **project GCP tương ứng đã bật Generative Language API**. Nếu API bị tắt sẽ trả HTTP 403 dù key hợp lệ. Server đọc key từ `~/.config/chatgpt-audio/v2.env` hoặc biến môi trường cùng tên (alias `GEMINI_API_KEY`).
+
 ## Tài liệu cần cập nhật khi đổi hành vi
 
 `README.md` · `docs/INSTALL-MACOS.md` · `docs/HOTKEYS.md` · `docs/SCREENS.md` · `PRIVACY.md` · `CHANGELOG.md`
