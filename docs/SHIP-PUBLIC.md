@@ -57,9 +57,9 @@ export NOTARY_PROFILE="AC_NOTARY"
 | Repo public + landing + DMG | ✅ `https://noi.d92.uk` · `https://dl.d92.uk/Noi-1.0.1.dmg` |
 | Self-contained `.app` | ✅ |
 | DMG “kéo vào Applications” | ✅ `scripts/make-dmg.sh` |
-| Developer ID cert trên máy build | ❌ chỉ có cert local (`ChatGPT Audio Local Code Signing`) |
-| notarytool credentials | ❌ chưa store |
-| Double-click sau tải web không cảnh báo | ❌ cần notarize |
+| Developer ID cert trên máy build | ❌ chủ đích bỏ — chỉ cert local |
+| notarytool credentials | ❌ chủ đích bỏ |
+| Double-click sau tải web không cảnh báo | ❌ chấp nhận: chuột phải → Mở (ghi trên landing) |
 
 ## Tạm thời (beta / free chưa notarize)
 

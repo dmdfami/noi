@@ -9,13 +9,14 @@ Bản công khai hiện tại: **1.0.1** — [noi.d92.uk](https://noi.d92.uk) ·
 - Repo public MIT, không commit secret / script SSH nội bộ
 - `packages/local-core`: `npm test`
 
-## Còn một việc (cần tài khoản Apple Developer)
+## Notarize — chủ đích không làm
 
-**Notarize** — máy build hiện **không** có `Developer ID Application` hay profile `notarytool`. Không notarize được cho đến khi:
+Không notarize. Đây là app mã nguồn mở phân phối ngoài App Store; người dùng cài bằng chuột phải → Mở. Landing đã nói rõ.
 
-1. Đăng ký [Apple Developer Program](https://developer.apple.com/programs/) (~$99/năm)
-2. Cài cert Developer ID Application trên máy build
-3. `xcrun notarytool store-credentials`
-4. `CODESIGN_IDENTITY="Developer ID Application: …" NOTARY_PROFILE=AC_NOTARY ./scripts/make-dmg.sh`
+Lý do (quyết định 2026-08-14):
 
-Cho đến lúc đó landing nói đúng: bản chưa notarize, lần đầu chuột phải → Mở. Chi tiết: [SHIP-PUBLIC.md](SHIP-PUBLIC.md).
+- **Developer ID + notarize cần Apple Developer Program**, phí ~$99 **mỗi năm** (gia hạn membership). Hết hạn thì không nộp bản mới lên notary được. Không đáng cho một dự án miễn phí.
+- Đăng nhập Apple ID / Xcode trên máy **không** phải Developer ID Application. Máy này chỉ có cert local `ChatGPT Audio Local Code Signing` (tự ký, tới 2036).
+- Cài OSS bằng chuột phải → Mở là đường chuẩn, không phải “hỏng”.
+
+Nếu sau này đổi ý: cần membership đang hiệu lực, cert `Developer ID Application`, rồi `NOTARY_PROFILE=… ./scripts/make-dmg.sh`. Chi tiết kỹ thuật: [SHIP-PUBLIC.md](SHIP-PUBLIC.md).
