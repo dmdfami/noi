@@ -1,7 +1,41 @@
 import { mkdirSync, readFileSync, writeFileSync, existsSync, chmodSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import { DEFAULT_CORRECT } from "./providers/catalog.mjs";
+import { DEFAULT_CORRECT, CORRECT_PROVIDERS } from "./providers/catalog.mjs";
+
+const KNOWN_CORRECT_PROVIDERS = new Set(CORRECT_PROVIDERS.map((p) => p.id));
+
+/** Drop leftover providers (workers_ai, …) from older internal builds. */
+export function sanitizeCorrectPrefs(correct) {
+  const src = correct && typeof correct === "object" ? correct : {};
+  const next = { ...DEFAULT_CORRECT, ...src };
+  next.activeProviderId = KNOWN_CORRECT_PROVIDERS.has(next.activeProviderId)
+    ? next.activeProviderId
+    : "aistudio";
+  const selected = (Array.isArray(next.selected) ? next.selected : [])
+    .map((s) => ({
+      providerId: KNOWN_CORRECT_PROVIDERS.has(s?.providerId) ? s.providerId : "aistudio",
+      modelId: String(s?.modelId || s?.id || ""),
+    }))
+    .filter((s) => s.modelId && isKeptCorrectModel(s.modelId));
+  next.selected = selected.length ? selected : [...DEFAULT_CORRECT.selected];
+  if (
+    !next.selected.some(
+      (s) => s.modelId === next.activeModelId && s.providerId === next.activeProviderId,
+    )
+  ) {
+    next.activeModelId = next.selected[0].modelId;
+    next.activeProviderId = next.selected[0].providerId;
+  }
+  if (next.mode === "rotate" && next.selected.length < 2) next.mode = "single";
+  return next;
+}
+
+function isKeptCorrectModel(id) {
+  if (CORRECT_PROVIDERS.some((p) => p.models.some((m) => m.id === id))) return true;
+  // Live AI Studio ids not in the static fallback list
+  return /^(gemma-|gemini-)/i.test(id);
+}
 
 export const CONFIG_DIR = join(homedir(), ".config", "chatgpt-audio");
 export const ENV_PATH = join(CONFIG_DIR, "v2.env");
@@ -146,31 +180,20 @@ export function loadPrefs() {
   if (!existsSync(PREFS_PATH)) return defaultPrefs();
   try {
     const raw = JSON.parse(readFileSync(PREFS_PATH, "utf8"));
-    const correct = { ...DEFAULT_CORRECT, ...(raw.correct || {}) };
-    // Migrate: ensure selected[] includes active model
-    if (!Array.isArray(correct.selected) || !correct.selected.length) {
-      correct.selected = [
-        {
-          providerId: correct.activeProviderId || "aistudio",
-          modelId: correct.activeModelId || "gemma-4-26b-a4b-it",
-        },
-      ];
-    } else {
-      const ap = correct.activeProviderId;
-      const am = correct.activeModelId;
-      if (
-        ap &&
-        am &&
-        !correct.selected.some((s) => s.providerId === ap && s.modelId === am)
-      ) {
-        correct.selected = [{ providerId: ap, modelId: am }, ...correct.selected];
-      }
-    }
-    return {
+    const correct = sanitizeCorrectPrefs({ ...DEFAULT_CORRECT, ...(raw.correct || {}) });
+    const next = {
       ...defaultPrefs(),
       ...raw,
       correct,
     };
+    try {
+      if (JSON.stringify(raw.correct || {}) !== JSON.stringify(correct)) {
+        writeFileSync(PREFS_PATH, JSON.stringify(next, null, 2) + "\n", { mode: 0o600 });
+      }
+    } catch {
+      /* keep memory copy even if disk write fails */
+    }
+    return next;
   } catch {
     return defaultPrefs();
   }
@@ -185,7 +208,7 @@ export function savePrefs(patch) {
   const next = {
     ...cur,
     ...patch,
-    correct: { ...cur.correct, ...(patch.correct || {}) },
+    correct: sanitizeCorrectPrefs({ ...cur.correct, ...(patch.correct || {}) }),
     prompts: { ...cur.prompts, ...(patch.prompts || {}) },
     stt: { ...cur.stt, ...(patch.stt || {}) },
   };

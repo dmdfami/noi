@@ -927,6 +927,12 @@ final class AppState: ObservableObject {
         menuCancel?.isEnabled = false
     }
 
+    func dashboardURL() -> String {
+        let s = PermissionsSetupWindowController.snapshot()
+        let base = client.baseURL.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        return "\(base)/?mic=\(s.mic ? 1 : 0)&ax=\(s.accessibility ? 1 : 0)&im=\(s.inputMonitoring ? 1 : 0)"
+    }
+
     /// Primary (only) config surface: in-app WKWebView after ensureCore.
     func openDashboard() {
         Task { @MainActor in
@@ -934,7 +940,7 @@ final class AppState: ObservableObject {
             configDashboard.onDeepLink = { [weak self] url in
                 self?.handleDeepLink(url)
             }
-            configDashboard.show(urlString: client.baseURL + "/")
+            configDashboard.show(urlString: dashboardURL())
         }
     }
 
@@ -1012,6 +1018,7 @@ final class AppState: ObservableObject {
             menuBar.updateStatusHeader(sttReady: sttReady, corrReady: corrReady, allPermsOK: perms.allOK)
             menuBar.updateAccount(name: name, email: email, sttReady: sttReady)
             menuBar.updatePermissionsMenu(snapshot: perms)
+            configDashboard.pushPerms(perms)
             PopoverModel.shared.apply(
                 sttReady: sttReady,
                 corrReady: corrReady,

@@ -61,7 +61,8 @@ export const CORRECT_PROVIDERS = [
 ];
 
 export function resolveProviderId(id) {
-  return id || "aistudio";
+  if (id && CORRECT_PROVIDERS.some((p) => p.id === id)) return id;
+  return "aistudio";
 }
 
 export const DEFAULT_CORRECT = {
@@ -90,6 +91,7 @@ export function allCorrectProviders() {
 
 /** Prefer providerId when set — supports live model ids not in static catalog. */
 export function findModel(modelId, providerId) {
+  if (!modelId || /^@cf\//.test(modelId)) return null;
   const list = allCorrectProviders();
   const pid = resolveProviderId(providerId);
   const p = list.find((x) => x.id === pid) || list[0];

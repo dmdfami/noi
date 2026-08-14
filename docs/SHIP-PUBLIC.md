@@ -54,7 +54,7 @@ export NOTARY_PROFILE="AC_NOTARY"
 
 | Hạng mục | Status |
 |---|---|
-| Repo public + landing + DMG | ✅ `https://noi.d92.uk` · `https://dl.d92.uk/Noi-1.0.2.dmg` |
+| Repo public + landing + DMG | ✅ `https://noi.d92.uk` · `https://dl.d92.uk/Noi-1.0.3.dmg` |
 | Self-contained `.app` | ✅ |
 | DMG “kéo vào Applications” | ✅ `scripts/make-dmg.sh` |
 | Developer ID cert trên máy build | ✅ `Developer ID Application: DUC DO MANH (P9U773F44F)` tới 2031-08-15 |

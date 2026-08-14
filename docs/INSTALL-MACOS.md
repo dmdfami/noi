@@ -11,7 +11,7 @@ Không cần Terminal, không cần cài Node, không cần git. App gói sẵn 
 
 ## 1. Tải & cài
 
-1. Tải **`Noi-1.0.2.dmg`** từ [noi.d92.uk](https://noi.d92.uk) hoặc [tải trực tiếp](https://dl.d92.uk/Noi-1.0.2.dmg).
+1. Tải **`Noi-1.0.3.dmg`** từ [noi.d92.uk](https://noi.d92.uk) hoặc [tải trực tiếp](https://dl.d92.uk/Noi-1.0.3.dmg).
 2. Mở DMG → kéo **Nói** vào thư mục **Applications**.
 3. Mở Nói từ Applications.
 
@@ -24,7 +24,7 @@ Lần đầu mở, Nói hiện cửa sổ **Quyền** với 3 dòng. Bấm nút 
 | Quyền | Để làm gì | Không cấp thì |
 |---|---|---|
 | **Microphone** | Ghi âm khi bạn giữ ⌃⌥ | Không nói được |
-| **Accessibility** | Đọc phần đang chọn, chèn kết quả tại con trỏ | Không dán/không sửa được |
+| **Accessibility** | Đọc phần đang chọn, chèn kết quả tại con trỏ | Không dán/không sửa được. Đổi chữ ký (Developer ID lần đầu) macOS hỏi lại một lần, dù bản ad-hoc cũ đã cấp. |
 | **Input Monitoring** | Nhận hotkey toàn hệ thống, dán vào Terminal | Hotkey không chạy |
 
 Một số trang System Settings yêu cầu **thoát và mở lại app** sau khi bật.
@@ -77,7 +77,7 @@ Key chỉ nằm ở `~/.config/chatgpt-audio/v2.env` (quyền 0600).
 
 Requirements: macOS 13+, **Apple Silicon only**, a ChatGPT account, ~120 MB.
 
-1. Download `Noi-1.0.2.dmg` from [noi.d92.uk](https://noi.d92.uk) or GitHub Releases; open it and drag **Nói** to Applications. The current build is Apple-notarized.
+1. Download `Noi-1.0.3.dmg` from [noi.d92.uk](https://noi.d92.uk) or GitHub Releases; open it and drag **Nói** to Applications. The current build is Apple-notarized.
 2. Grant three permissions in the first-run window: **Microphone** (record while holding ⌃⌥), **Accessibility** (read selection, insert result), **Input Monitoring** (global hotkeys, pasting into Terminal). Some panes need an app restart.
 3. Menu bar icon → **Settings** → **Sign in…** to ChatGPT. Required for dictation. Use **Switch account…** to change accounts.
 4. Hold **⌃⌥** to dictate, double-tap **⌥** to fix the selected text (needs an AI Studio key), **Esc** to stop.

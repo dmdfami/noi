@@ -1,5 +1,5 @@
 /* Nói — Settings (single page, minimal). locale vi|en */
-const APP_VERSION = "1.0.1";
+const APP_VERSION = "1.0.3";
 
 const state = {
   boot: null,
@@ -35,7 +35,10 @@ const I18N = {
     rotateLabel: "Hàng xoay",
     rotateHint: "Mỗi lần sửa dùng model kế tiếp trong hàng (tự chuyển khi lỗi/hết lượt).",
     statusNeedsSetup: "Cần đăng nhập",
-    statusReady: "Sẵn sàng",
+    statusReady: "Đã đăng nhập",
+    statusNeedPerms: "Thiếu quyền",
+    permsBannerTitle: "Chưa dùng được — còn thiếu quyền macOS",
+    permsBannerBody: "Cửa sổ Quyền: bật Trợ năng (dán chữ) và Theo dõi phím (Terminal). Micro đã có vẫn chưa đủ.",
     footNote: "Nói · nhấn phím là ra chữ",
     testBtn: "Thử sửa một câu",
     keySaved: "đã lưu",
@@ -68,7 +71,10 @@ const I18N = {
     rotateLabel: "Rotate queue",
     rotateHint: "Each fix uses the next model in the queue (auto-switch on error/limit).",
     statusNeedsSetup: "Sign-in needed",
-    statusReady: "Ready",
+    statusReady: "Signed in",
+    statusNeedPerms: "Need permissions",
+    permsBannerTitle: "Not usable yet — macOS permissions missing",
+    permsBannerBody: "In the Permissions window: turn on Accessibility (paste) and Input Monitoring (Terminal). Microphone alone is not enough.",
     footNote: "Nói · press a key, get text",
     testBtn: "Try fixing a sentence",
     keySaved: "saved",
@@ -424,14 +430,56 @@ $("btn-chatgpt-login").addEventListener("click", (e) => {
 });
 
 /* —— render / refresh —— */
+function readPermsFromQuery() {
+  const q = new URLSearchParams(location.search);
+  if (!q.has("mic") && !q.has("ax") && !q.has("im")) return null;
+  return { mic: q.get("mic") === "1", ax: q.get("ax") === "1", im: q.get("im") === "1" };
+}
+
+/** OS perms from the menu-bar app (?mic=&ax=&im= or window.__noiSetPerms). */
+let osPerms = readPermsFromQuery();
+window.__noiSetPerms = (p) => {
+  osPerms = p && typeof p === "object" ? p : null;
+  render();
+};
+
+function permsOK() {
+  if (!osPerms) return true;
+  return Boolean(osPerms.mic && osPerms.ax && osPerms.im);
+}
+
+function renderOsPerms() {
+  const el = $("os-perms");
+  if (!el) return;
+  const L = t();
+  if (!osPerms || permsOK()) {
+    el.hidden = true;
+    el.innerHTML = "";
+    return;
+  }
+  const missing = [
+    !osPerms.mic ? (state.locale === "en" ? "Microphone" : "Micro") : null,
+    !osPerms.ax ? (state.locale === "en" ? "Accessibility" : "Trợ năng") : null,
+    !osPerms.im ? (state.locale === "en" ? "Input Monitoring" : "Theo dõi phím") : null,
+  ].filter(Boolean);
+  el.hidden = false;
+  el.innerHTML = `<strong>${esc(L.permsBannerTitle)}</strong><p class="setup-detail">${esc(L.permsBannerBody)} ${esc(missing.join(" · "))}</p>`;
+}
+
 function render() {
   const L = t();
   const st = state.boot?.status || {};
-  const ready = st.status === "ready";
+  const loggedIn = st.status === "ready";
+  const ready = loggedIn && permsOK();
   $("system-pill").className = `pill ${ready ? "ok" : "warn"}`;
-  $("system-pill").textContent = ready ? L.statusReady : L.statusNeedsSetup;
+  $("system-pill").textContent = !loggedIn
+    ? L.statusNeedsSetup
+    : permsOK()
+      ? L.statusReady
+      : L.statusNeedPerms;
   $("foot-version").textContent = `Nói ${APP_VERSION}`;
   applyLocaleStrings();
+  renderOsPerms();
   renderSetupStatus();
   renderKeyRow();
   renderModels();

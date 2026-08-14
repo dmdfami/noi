@@ -96,6 +96,12 @@ body { margin: 0; min-height: 100vh; background: var(--bg); }
   padding: 14px 16px;
   margin-bottom: 14px;
 }
+.status-block.os-perms {
+  border-color: color-mix(in srgb, var(--warn) 45%, var(--line));
+  background: color-mix(in srgb, var(--warn) 10%, var(--surface));
+}
+.status-block.os-perms strong { display: block; margin-bottom: 4px; }
+.status-block.os-perms .setup-detail { margin: 0; }
 .setup-title { margin: 0 0 10px; font-size: 0.95rem; font-weight: 650; }
 .setup-row {
   display: flex;

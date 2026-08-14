@@ -103,8 +103,8 @@ enum AppStrings {
     static var permsHero: String { L("Ba quyền để bắt đầu", "Three permissions to start") }
     static var permsBlurb: String {
         L(
-            "Bật từng quyền trong Cài đặt Hệ thống, rồi quay lại — trạng thái tự cập nhật.",
-            "Enable each permission in System Settings, then return — status updates automatically."
+            "Cùng app Nói — bản ký Developer ID là chữ ký mới nên macOS hỏi lại Trợ năng và Theo dõi phím một lần. Micro giữ nguyên. Bật xong thì các bản sau không hỏi lại.",
+            "Same Nói app — the Developer ID signature is new, so macOS asks again for Accessibility and Input Monitoring once. Microphone stays. Later updates will not ask again."
         )
     }
 

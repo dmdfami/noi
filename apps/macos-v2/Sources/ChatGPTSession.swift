@@ -320,6 +320,14 @@ final class PermissionsSetupWindowController: NSObject, NSWindowDelegate {
         startPolling()
         window?.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
+        // Stale TCC rows (old code signature) look granted in Settings but
+        // AXIsProcessTrusted is false — ask macOS now, do not wait for a click.
+        if !snap.accessibility {
+            _ = SelectionService.isAXTrusted(prompt: true)
+        }
+        if !snap.inputMonitoring {
+            SelectionService.requestInputMonitoring()
+        }
     }
 
     func close() {
@@ -664,6 +672,12 @@ final class ConfigDashboardWindowController: NSObject, NSWindowDelegate, WKNavig
         } else {
             webView?.reload()
         }
+    }
+
+    func pushPerms(_ snap: PermissionsSetupWindowController.Snapshot) {
+        let js =
+            "window.__noiSetPerms && window.__noiSetPerms({mic:\(snap.mic),ax:\(snap.accessibility),im:\(snap.inputMonitoring)})"
+        webView?.evaluateJavaScript(js, completionHandler: nil)
     }
 
     func close() {

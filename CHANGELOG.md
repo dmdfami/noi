@@ -2,6 +2,11 @@
 
 Mỗi bản phát hành = một `Noi-<version>.dmg` trên GitHub Releases, khớp `CFBundleShortVersionString`.
 
+## 1.0.3 — trạng thái Cài đặt khớp quyền macOS
+
+- Cửa sổ Cài đặt không còn ghi **Sẵn sàng** khi còn thiếu Trợ năng / Theo dõi phím (ký Developer ID mới = TCC coi như app mới).
+- Gỡ prefs cũ `workers_ai` / `@cf/…` còn sót từ bản nội bộ — “Sửa văn bản” chỉ còn Google AI Studio.
+
 ## 1.0.2 — Settings không nhận nhầm core cũ
 
 - **Cửa sổ Cài đặt ra JSON `not_found /index.html`** khi cổng `8797` bị process mồ côi của app cũ (ChatGPT Audio Local) chiếm: Nói thấy `/healthz` OK nên không spawn core của mình. Giờ chỉ nhận core có UI HTML; cổng bận thì chọn cổng trống và truyền `PORT`.
