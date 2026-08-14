@@ -57,13 +57,8 @@ export NOTARY_PROFILE="AC_NOTARY"
 | Repo public + landing + DMG | ✅ `https://noi.d92.uk` · `https://dl.d92.uk/Noi-1.0.1.dmg` |
 | Self-contained `.app` | ✅ |
 | DMG “kéo vào Applications” | ✅ `scripts/make-dmg.sh` |
-| Developer ID cert trên máy build | ❌ chủ đích bỏ — chỉ cert local |
-| notarytool credentials | ❌ chủ đích bỏ |
-| Double-click sau tải web không cảnh báo | ❌ chấp nhận: chuột phải → Mở (ghi trên landing) |
+| Developer ID cert trên máy build | ✅ `Developer ID Application: DUC DO MANH (P9U773F44F)` tới 2031-08-15 |
+| notarytool credentials | ✅ profile `AC_NOTARY` (API key `noi-notary`) |
+| Double-click sau tải web không cảnh báo | ✅ `spctl`: accepted / Notarized Developer ID |
 
-## Tạm thời (beta / free chưa notarize)
-
-- Zip + `Cai-dat.command` hoặc chuột phải → Mở  
-- Landing phải nói rõ: bản beta, chưa notarize  
-
-**Không** claim “tải về click cài như app Mac chuẩn” cho đến khi `manifest.notarized: true` và `spctl --assess` pass trên máy sạch.
+Ship: `CODESIGN_IDENTITY="$APPLE_CODESIGN_IDENTITY" NOTARY_PROFILE=AC_NOTARY ./scripts/make-dmg.sh` (xem `~/.config/noi/apple.env`).

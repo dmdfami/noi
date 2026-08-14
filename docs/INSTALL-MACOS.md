@@ -15,7 +15,7 @@ Không cần Terminal, không cần cài Node, không cần git. App gói sẵn 
 2. Mở DMG → kéo **Nói** vào thư mục **Applications**.
 3. Mở Nói từ Applications.
 
-> **Lần đầu macOS báo "chưa được mở"?** Bản này chưa được Apple notarize. **Chuột phải vào Nói → Mở → Mở** (chỉ lần đầu). Không phải virus — mã nguồn mở, xem được toàn bộ trên GitHub. (Nếu tải bản `.zip`, double-click `Cai-dat.command` để tự gỡ cờ chặn.)
+> Bản phát hành hiện tại đã **notarize Apple**. Mở DMG, kéo vào Applications, mở từ Applications. Nếu macOS vẫn hỏi: chuột phải → Mở.
 
 ## 2. Cấp 3 quyền hệ thống
 
@@ -77,7 +77,7 @@ Key chỉ nằm ở `~/.config/chatgpt-audio/v2.env` (quyền 0600).
 
 Requirements: macOS 13+, **Apple Silicon only**, a ChatGPT account, ~120 MB.
 
-1. Download `Noi-1.0.1.dmg` from [noi.d92.uk](https://noi.d92.uk) or GitHub Releases; open it and drag **Nói** to Applications. First launch: right-click → Open → Open (not notarized yet).
+1. Download `Noi-1.0.1.dmg` from [noi.d92.uk](https://noi.d92.uk) or GitHub Releases; open it and drag **Nói** to Applications. The current build is Apple-notarized.
 2. Grant three permissions in the first-run window: **Microphone** (record while holding ⌃⌥), **Accessibility** (read selection, insert result), **Input Monitoring** (global hotkeys, pasting into Terminal). Some panes need an app restart.
 3. Menu bar icon → **Settings** → **Sign in…** to ChatGPT. Required for dictation. Use **Switch account…** to change accounts.
 4. Hold **⌃⌥** to dictate, double-tap **⌥** to fix the selected text (needs an AI Studio key), **Esc** to stop.

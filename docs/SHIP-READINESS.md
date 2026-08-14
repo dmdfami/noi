@@ -9,14 +9,19 @@ Bản công khai hiện tại: **1.0.1** — [noi.d92.uk](https://noi.d92.uk) ·
 - Repo public MIT, không commit secret / script SSH nội bộ
 - `packages/local-core`: `npm test`
 
-## Notarize — chủ đích không làm
+## Notarize — đã bật (2026-08-14)
 
-Không notarize. Đây là app mã nguồn mở phân phối ngoài App Store; người dùng cài bằng chuột phải → Mở. Landing đã nói rõ.
+Bản `1.0.1` trên [dl.d92.uk](https://dl.d92.uk/Noi-1.0.1.dmg) ký **Developer ID Application: DUC DO MANH (P9U773F44F)** và đã notarize + staple. Gatekeeper: `accepted / Notarized Developer ID`.
 
-Lý do (quyết định 2026-08-14):
+Ship lại DMG:
 
-- **Developer ID + notarize cần Apple Developer Program**, phí ~$99 **mỗi năm** (gia hạn membership). Hết hạn thì không nộp bản mới lên notary được. Không đáng cho một dự án miễn phí.
-- Đăng nhập Apple ID / Xcode trên máy **không** phải Developer ID Application. Máy này chỉ có cert local `ChatGPT Audio Local Code Signing` (tự ký, tới 2036).
-- Cài OSS bằng chuột phải → Mở là đường chuẩn, không phải “hỏng”.
+```bash
+export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
+set -a; source ~/.config/noi/apple.env; set +a
+cd ~/dev/noi
+SHIP_VERSION=x.y.z CODESIGN_IDENTITY="$APPLE_CODESIGN_IDENTITY" NOTARY_PROFILE=AC_NOTARY ./scripts/make-dmg.sh
+```
 
-Nếu sau này đổi ý: cần membership đang hiệu lực, cert `Developer ID Application`, rồi `NOTARY_PROFILE=… ./scripts/make-dmg.sh`. Chi tiết kỹ thuật: [SHIP-PUBLIC.md](SHIP-PUBLIC.md).
+Cert Developer ID tới **2031-08-15**. API key App Store Connect `noi-notary` không hết hạn (Infisical + `~/.config/noi/apple.env`). Membership Apple vẫn cần gia hạn ~$99/năm nếu muốn notarize bản *mới* sau khi hết hạn hội viên.
+
+Chi tiết kỹ thuật: [SHIP-PUBLIC.md](SHIP-PUBLIC.md).
